@@ -1,4 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+username: user_good
+password: pass_good
 
 ## Available Scripts
 

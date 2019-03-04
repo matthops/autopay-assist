@@ -1,98 +1,40 @@
 import React, { Component } from "react";
-// import axios from "axios";
+import PlaidLink from "react-plaid-link";
+import axios from "axios";
 
 export default class Container extends Component {
+  handleOnExit = () => {
+    console.log("exit");
+  };
+
+  handleOnSuccess = (public_token, metadata) => {
+    axios.post("/plaid/get_access_token", {
+      public_token: public_token,
+      user_id: this.props.user.id
+    });
+    console.log("success", this.props);
+  };
+
   render() {
-    return <div>words</div>;
+    const { user } = this.props;
+    return (
+      <div>
+        {user.username ? (
+          <PlaidLink
+            clientName="Autopay Assist"
+            env="sandbox"
+            product={["transactions"]}
+            // publicKey="7e7ec821e167a738d081d1cd035c5c"
+            publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
+            onExit={this.handleOnExit}
+            onSuccess={this.handleOnSuccess}
+          >
+            Open Link and connect your bank!
+          </PlaidLink>
+        ) : (
+          <div> please log in</div>
+        )}
+      </div>
+    );
   }
 }
-
-// import Treasure from '../Treasure';
-
-// export default class Container extends Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       treasures: {},
-//     };
-//     this.addMyTreasure = this.addMyTreasure.bind(this);
-//   }
-
-//   componentDidUpdate(prevProps) {
-//     if (prevProps !== this.props) {
-//       this.setState({ treasures: {} });
-//     }
-//   }
-
-//   getDragonTreasure() {
-//     // axios GET to /api/treasure/dragon here
-//   }
-
-//   getAllTreasure() {
-//     // axios GET to /api/treasure/all here
-//   }
-
-//   getMyTreasure() {
-//     // axios GET to /api/treasure/user here
-//   }
-
-//   addMyTreasure(newMyTreasure) {
-//     this.setState({
-//       treasures: {
-//         ...this.state.treasures,
-//         user: newMyTreasure,
-//       },
-//     });
-//   }
-
-//   render() {
-//     const { username } = this.props.user;
-//     const { dragon, user, all } = this.state.treasures;
-//     return (
-//       <div className="Container">
-//         {dragon ? (
-//           <div className="treasureBox loggedIn">
-//             <h1>Dragon's treasure</h1>
-//             <Treasure treasure={dragon} />
-//           </div>
-//         ) : (
-//           <div className="treasureBox">
-//             <button className="title" onClick={() => this.getDragonTreasure()}>
-//               See Dragon's <br /> Treasure
-//             </button>
-//             <p>This treasure trove does not require a user to be logged in for access</p>
-//           </div>
-//         )}
-//         {user && username ? (
-//           <div className="treasureBox loggedIn">
-//             <h1>
-//               {this.props.user.username}
-//               's treasure
-//             </h1>
-//             <Treasure treasure={user} addMyTreasure={this.addMyTreasure} />
-//           </div>
-//         ) : (
-//           <div className="treasureBox">
-//             <button className="title" onClick={() => this.getMyTreasure()} name="user">
-//               See My <br /> Treasure
-//             </button>
-//             <p>This treasure trove requires a user to be logged in for access</p>
-//           </div>
-//         )}
-//         {all && username ? (
-//           <div className="treasureBox loggedIn">
-//             <h1>All treasure</h1>
-//             <Treasure treasure={all} />
-//           </div>
-//         ) : (
-//           <div className="treasureBox">
-//             <button className="title" onClick={() => this.getAllTreasure()} name="all">
-//               See All <br /> Treasure
-//             </button>
-//             <p>This treasure trove requires a user to be a logged in as an admin user for access</p>
-//           </div>
-//         )}
-//       </div>
-//     );
-//   }
-// }
