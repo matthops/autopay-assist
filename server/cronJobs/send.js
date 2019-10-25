@@ -1,7 +1,7 @@
 // const Nexmo = require('nexmo');
-// const express = require('express');
+const express = require('express');
 
-// const app = express();
+const app = express();
 
 // const { NEXMO_API_KEY, NEXMO_API_SECRET } = process.env;
 
@@ -27,7 +27,6 @@
 //     }
 //   }
 // });
+console.log('Is this cron job working?');
 
-// app.listen(3128);
-
-console.log('Is this cron jobw working?');
+app.listen(3128);
