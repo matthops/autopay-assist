@@ -1,15 +1,12 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class Main extends Component {
-  constructor(props) {
-    super(props);
-  }
   logout() {
     // axios GET to /auth/logout here
     console.log(this.props);
     axios
-      .get("/auth/logout")
+      .get('/auth/logout')
       .then(() => {
         this.props.updateUser({});
       })

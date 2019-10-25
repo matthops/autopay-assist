@@ -1,5 +1,5 @@
-const plaid = require("plaid");
-require("dotenv").config();
+const plaid = require('plaid');
+require('dotenv').config();
 
 const {
   PLAID_CLIENT_ID,
@@ -16,7 +16,7 @@ const client = new plaid.Client(
 
 module.exports = {
   getAccessToken: async (request, response, next) => {
-    const db = await request.app.get("db");
+    const db = await request.app.get('db');
     let ACCESS_TOKEN = null;
     let ITEM_ID = null;
     let USER_ID = request.body.user_id;
@@ -24,7 +24,8 @@ module.exports = {
     const PUBLIC_TOKEN = request.body.public_token;
     // console.log(PUBLIC_TOKEN, PLAID_PUBLIC_KEY);
     console.log(request.body);
-    client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
+    client.exchangePublicToken(PUBLIC_TOKEN, (error, tokenResponse) => {
+      console.log(error);
       if (error != null) {
         console.log(`Could not exchange public_token! Error: ${error}`);
         return response.json({ error });
@@ -39,8 +40,8 @@ module.exports = {
 
       client.getTransactions(
         ACCESS_TOKEN,
-        "2018-01-01",
-        "2018-02-01",
+        '2018-01-01',
+        '2018-02-01',
         {
           count: 5,
           offset: 0
