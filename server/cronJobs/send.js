@@ -1,4 +1,7 @@
 const Nexmo = require('nexmo');
+const express = require('express');
+
+const app = express();
 
 // module.exports = {
 //   nexmoJob: () => {
@@ -28,3 +31,5 @@ nexmo.message.sendSms(from, to, text, (err, responseData) => {
 });
 //   }
 // };
+
+app.listen(3128);
