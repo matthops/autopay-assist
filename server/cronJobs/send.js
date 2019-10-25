@@ -1,4 +1,3 @@
-require('dotenv').config();
 const Nexmo = require('nexmo');
 
 // module.exports = {
