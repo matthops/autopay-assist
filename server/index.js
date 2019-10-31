@@ -35,9 +35,12 @@ app.use(
 app.post('/auth/register', ac.register);
 app.post('/auth/login', ac.login);
 app.post('/plaid/get_access_token', pc.getAccessToken);
+app.get('/plaid/get_item_info', pc.getItemInfo);
+app.get('/plaid/get_categories', pc.getCategories);
 
 app.get('/auth/logout', ac.logout);
 app.get('/auth/me', ac.me);
 app.get('/api/transactions', mc.getTransactions);
+app.get('/api/get_rules', mc.getRules);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

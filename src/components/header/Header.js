@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import axios from "axios";
-import "./Header.css";
+import React, { Component } from 'react';
+import axios from 'axios';
+import './Header.scss';
 
 export default class Header extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       isAdmin: false
     };
     this.register = this.register.bind(this);
@@ -32,14 +32,14 @@ export default class Header extends Component {
     const { username, password } = this.state;
     // axios POST to /auth/login here
     axios
-      .post("/auth/login", {
+      .post('/auth/login', {
         username,
         password
       })
       .then(user => {
         this.props.updateUser(user.data);
-        this.setState({ username: "", password: "" });
-        console.log("logged in");
+        this.setState({ username: '', password: '' });
+        console.log('logged in');
       })
       .catch(err => {
         alert(err.response.request.response);
@@ -50,13 +50,13 @@ export default class Header extends Component {
     // axios POST to /auth/register here
     const { username, password, isAdmin } = this.state;
     axios
-      .post("/auth/register", {
+      .post('/auth/register', {
         username,
         password,
         isAdmin
       })
       .then(res => {
-        this.setState({ username: "", password: "" });
+        this.setState({ username: '', password: '' });
         this.props.updateUser(res.data);
       })
       .catch(err => {
@@ -67,7 +67,7 @@ export default class Header extends Component {
   logout() {
     // axios GET to /auth/logout here
     axios
-      .get("/auth/logout")
+      .get('/auth/logout')
       .then(() => {
         this.props.updateUser({});
       })
@@ -108,7 +108,7 @@ export default class Header extends Component {
                 type="checkbox"
                 id="adminCheckbox"
                 onChange={() => this.toggleAdmin()}
-              />{" "}
+              />{' '}
               <span> Admin </span>
             </div>
             <button onClick={this.login}>Log In</button>

@@ -11,10 +11,45 @@ const client = new plaid.Client(
   PLAID_CLIENT_ID,
   PLAID_SECRET,
   REACT_APP_PLAID_PUBLIC_KEY,
-  plaid.environments.sandbox
+  plaid.environments.development
 );
 
 module.exports = {
+  getItemInfo: (req, res) => {
+    const db = req.app.get('db');
+
+    db.get_item(req.session.user.id).then(results => {
+      client.getTransactions(
+        results[0].access_token,
+        '2019-10-12',
+        '2019-10-25',
+        {
+          count: 25,
+          offset: 0
+        },
+        (err, response) => {
+          // Handle err
+          if (err) {
+            console.log('error', err);
+          }
+
+          response.transactions.forEach(transact => {
+            console.log(transact.category);
+          });
+
+          res.status(201).send(response);
+        }
+      );
+    });
+  },
+  getCategories: (req, res) => {
+    client.getCategories(function(err, response) {
+      if (err) {
+        console.log('error', err);
+      }
+      res.status(201).send(response.categories);
+    });
+  },
   getAccessToken: async (request, response, next) => {
     const db = await request.app.get('db');
     let ACCESS_TOKEN = null;

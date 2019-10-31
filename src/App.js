@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "./App.css";
-import Header from "./components/header/Header";
-import Container from "./components/container/Container";
-// import Login from "./components/login/Login";
-// import Main from "./components/main/Main";
-import axios from "axios";
+import React, { Component } from 'react';
+import './App.scss';
+// import Header from "./components/header/Header";
+// import Container from "./components/container/Container";
+import Login from './components/login/Login';
+import Main from './components/main/Main';
+import axios from 'axios';
 
 class App extends Component {
   constructor() {
@@ -12,40 +12,40 @@ class App extends Component {
     this.state = {
       user: {}
     };
-    this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
-    axios
-      .get("/auth/me")
-      .then(user => {
-        this.setState({
-          user: user.data
-        });
-      })
-      .then(console.log("hit", this.state.user));
+    axios.get('/auth/me').then(user => {
+      this.setState({
+        user: user.data
+      });
+    });
   }
 
-  updateUser(user) {
+  componentWillUnmount() {}
+
+  updateUser = user => {
+    console.log('update user', user);
+
     this.setState({
       user
     });
-    console.log("update user", user);
-  }
+    console.log('update user', user);
+  };
 
   render() {
     const { user } = this.state;
-    console.log("render", user);
+    console.log('render', user);
     return (
       <div className="App">
-        {/* {user.username ? (
+        {user.username ? (
           <Main user={user} updateUser={this.updateUser} />
         ) : (
           <Login user={user} updateUser={this.updateUser} />
-        )} */}
+        )}
 
-        <Header user={user} updateUser={this.updateUser} />
-        <Container user={user} />
+        {/* <Header user={user} updateUser={this.updateUser} />
+        <Container user={user} /> */}
       </div>
     );
   }

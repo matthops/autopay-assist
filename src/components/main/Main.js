@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './Main.scss';
+import Transactions from '../Transactions';
+import Rules from '../Rules';
 
 export default class Main extends Component {
-  logout() {
-    // axios GET to /auth/logout here
-    console.log(this.props);
-    axios
-      .get('/auth/logout')
-      .then(() => {
-        this.props.updateUser({});
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   render() {
     const { user } = this.props;
-    console.log(this.props);
+    console.log('PROPSPROPSPROPS', user);
     return (
       <div>
-        {user.username ? (
-          <div className="welcomeMessage">
-            <p>{user.username}, welcome to Autopay Assist</p>
-            <button type="submit" onClick={this.logout}>
-              Logout
-            </button>
-          </div>
-        ) : (
-          <h1> Main Component, yo</h1>
-        )}
+        <header className="header-container">
+          <div className="main-title">MoneyAware</div>
+          <button
+            className="logout-button"
+            type="submit"
+            onClick={() => this.props.updateUser({})}
+          >
+            Logout
+          </button>
+        </header>
+        {/* <Rules /> */}
+        <Transactions {...this.props} />
       </div>
     );
   }

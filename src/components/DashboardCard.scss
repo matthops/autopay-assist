@@ -1,0 +1,21 @@
+.dashboard-card-container {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  width: 30%;
+  background: #f5f5f5;
+  margin-bottom: 3%;
+}
+
+.dashboard-card-headline {
+  font-weight: bold;
+  padding-top: 20px;
+  font-size: 20px;
+  color: #207561;
+}
+
+.dashboard-card-num {
+  font-size: 50px;
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}

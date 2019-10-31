@@ -1,0 +1,142 @@
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 115px);
+  min-width: 100vw;
+  align-items: center;
+}
+
+.loginWindow {
+  /* background: #383737; */
+  padding: 8px 40px 8px 40px;
+  /* height: 8vh; */
+  display: flex;
+  flex-grow: 1;
+  /* justify-content: space-between; */
+  align-items: center;
+  justify-content: center;
+}
+
+.loginContent {
+  width: 550px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  background: #f5f5f5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  /* font-family: $featureFontBold; */
+  padding: 30px 20px;
+}
+
+.title {
+  color: #589167;
+  font-family: 'Cabin', sans-serif;
+  letter-spacing: 2px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.7);
+  font-size: 48px;
+  line-height: 55px;
+  padding-bottom: 25px;
+}
+
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Header input,
+.Header button {
+  margin: 0px 0px 0px 20px;
+}
+
+.Header input {
+  height: 28px;
+  width: 10vw;
+  text-align: center;
+}
+
+.adminCheck {
+  color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: -3px 0px 0px 20px;
+  font-size: 0.75em;
+}
+
+#adminCheckbox {
+  margin-top: 5px;
+
+  margin: auto;
+  appearance: none;
+  padding: 5px;
+  border: 2px solid #e0e0e0;
+  border-radius: 3px;
+}
+
+.welcomeMessage {
+  color: whitesmoke;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.welcomeMessage ::first-letter {
+  text-transform: capitalize;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-items: space-around;
+}
+
+.textfield {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  font-size: 16px;
+  padding: 16px 14px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-family: 'Cabin', sans-serif;
+  box-sizing: border-box;
+  min-width: 0;
+  background-color: #ffffff;
+}
+
+.loginButtons {
+  box-sizing: border-box;
+  margin: 10px;
+  font-family: 'Cabin', sans-serif;
+  color: #ffffff;
+  background-color: #589167;
+  border-radius: 10px;
+  border: 2px solid #589167;
+  padding: 15px 20px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.registerText {
+  box-sizing: border-box;
+  margin: 10px;
+  font-family: 'Cabin', sans-serif;
+  color: #589167;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.inputContainer {
+  width: 80%;
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+}
