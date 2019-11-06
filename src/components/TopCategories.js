@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class TopThreeCategories extends Component {
+export default class TopCategories extends Component {
   render() {
     const dataArr = this.props.categoryArr;
     let newArr = [];
@@ -16,11 +16,11 @@ export default class TopThreeCategories extends Component {
     let mostFrequent;
 
     const hashFunc = arr => {
-      if (topCatArr.length >= 3) {
+      if (topCatArr.length >= 6) {
         return topCatArr;
       }
 
-      if (topCatArr.length < 3) {
+      if (topCatArr.length < 6) {
         for (var i = 0, len = arr.length; i < len; i++) {
           let word = arr[i];
           if (counts[word] === undefined) {

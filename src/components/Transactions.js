@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-// import PlaidLink from 'react-plaid-link';
 import axios from 'axios';
 import DashboardCard from './DashboardCard';
-import TopThreeCategories from './TopThreeCategories';
 import './Transactions.scss';
 
 export default class Transactions extends Component {
@@ -10,10 +8,18 @@ export default class Transactions extends Component {
     transactionsArr: [],
     dataToTrack: [],
     frequencyToTrack: '',
-    categoriesArr: []
+    categoriesArr: [],
+    rulesArr: [],
+    filterWord: null
   };
 
   componentDidMount() {
+    axios.get('/api/get_rules').then(results => {
+      this.setState({
+        rulesArr: results.data[0].category.weekly
+      });
+    });
+
     axios.get('/plaid/get_item_info').then(results => {
       let catArr = [];
       results.data.transactions.forEach(transact => {
@@ -33,28 +39,67 @@ export default class Transactions extends Component {
     // });
   }
 
-  handleOnExit = () => {
-    console.log('exit');
+  handleAddCard = () => {
+    console.log('ADDCARD');
+    this.setState({
+      rulesArr: [...this.state.rulesArr, null]
+    });
   };
 
-  handleOnSuccess = (public_token, metadata) => {
-    axios.post('/plaid/get_access_token', {
-      public_token: public_token,
-      user_id: this.props.user.id
+  handleSetCategory = words => {
+    axios.post('/api/update_rules', { userRules: words }).then(response => {
+      this.setState({
+        rulesArr: response.data[0].category.weekly
+      });
     });
+  };
 
-    console.log('success', this.props);
+  handleFilterWordChange = word => {
+    this.setState({
+      filterWord: word
+    });
   };
 
   render() {
-    const { transactionsArr } = this.state;
-    console.log(transactionsArr);
+    const { transactionsArr, rulesArr, filterWord } = this.state;
+    console.log('filterword', filterWord);
 
-    const renderTransactions = transactionsArr.map((e, i) => (
+    const filterFunc = data => {
+      console.log(data.category);
+      if (filterWord === null) {
+        return true;
+      }
+      return data.category.includes(filterWord);
+    };
+
+    const filteredTransactions = transactionsArr.filter(filterFunc);
+
+    console.log('FilteredTransactions', filteredTransactions);
+
+    const renderTransactions = filteredTransactions.map((e, i) => (
       <div className="transaction-container" key={i}>
+        {/* {console.log(e, i)} */}
         <div className="transaction-date">{e.date} </div>
         <div className="transaction-name"> {e.name} </div>
-        <div className="transaction-amount"> ${e.amount.toLocaleString()}</div>
+        <div className="category-container">
+          {e.category.map((cat, ind) => {
+            return (
+              <div
+                key={ind}
+                onClick={() => this.handleSetCategory(cat)}
+                className="category-box"
+              >
+                {cat}
+              </div>
+            );
+          })}
+        </div>
+        <div className="transaction-amount">
+          $
+          {e.amount.toLocaleString(undefined, {
+            minimumFractionDigits: 2
+          })}
+        </div>
       </div>
     ));
 
@@ -68,61 +113,59 @@ export default class Transactions extends Component {
     const categoryArr = category => {
       let countArr = [];
       transactionsArr.forEach(e => {
-        e.category.forEach(x =>
-          x.includes(category) ? countArr.push(e.amount) : null
-        );
+        e.category.forEach(x => {
+          if (x.includes(category)) {
+            countArr.push(e.amount);
+          }
+        });
       });
-
       return countArr.reduce(getSum, 0);
     };
 
+    const renderRules = rulesArr.map((x, index) => {
+      if (x === null) {
+        return (
+          <DashboardCard
+            key={index}
+            headline={`What category would you like to track? `}
+            isNull={true}
+            setCategory={this.handleSetCategory}
+          />
+        );
+      }
+      return (
+        <DashboardCard
+          handleClick={this.handleFilterWordChange}
+          name={x}
+          key={index}
+          headline={`Total spent this week on ${x}`}
+          cardNumber={`$${categoryArr(x).toLocaleString(undefined, {
+            minimumFractionDigits: 2
+          })}`}
+        />
+      );
+    });
+
     return (
       <div className="transaction-page">
-        {/* <PlaidLink
-          clientName="Autopay Assist"
-          env="development"
-          product={['transactions']}
-          publicKey="7e7ec821e167a738d081d1cd035c5c"
-          // publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
-          onExit={this.handleOnExit}
-          onSuccess={this.handleOnSuccess}
-        >
-          Open Link and connect your bank!
-        </PlaidLink> */}
-
-        {/* <div>
-          Choose to display:
-          <select name="data">
-            <option value="option1"> Total Amount </option>
-            <option value="option2"> Total Transactions </option>
-            <option value="option3"> Total Spent on Food</option>
-          </select>
-        </div> */}
-        {/* <h1> This Week</h1> */}
-        <TopThreeCategories categoryArr={this.state.categoriesArr} />
         <div className="transaction-top-container">
           <DashboardCard
+            handleClick={this.handleFilterWordChange}
+            name={null}
             headline={'Amount spent this week'}
-            cardNumber={`$${amountSpent.toLocaleString()}`}
+            cardNumber={`$${amountSpent.toLocaleString(undefined, {
+              minimumFractionDigits: 2
+            })}`}
           />
-          <DashboardCard
-            headline="Spent on food"
-            cardNumber={`$${categoryArr('Food')}`}
-          />
-          <DashboardCard
-            headline="Number of Transactions"
-            cardNumber={transactionsArr.length}
-          />
-          {/* <DashboardCard
-            headline="Spent in Restaurants"
-            cardNumber={`$${categoryArr('Restaurants').toLocaleString()}`}
-          /> */}
+          {renderRules}
+          <DashboardCard isAddCategory={true} addCard={this.handleAddCard} />
         </div>
 
         <div className="transaction-window">
           <div className="transaction-container headline">
             <div className="transaction-date">Date</div>
             <div className="transaction-name"> Name</div>
+            <div className="transaction-category"> Categories</div>
             <div className="transaction-amount">Amount</div>
           </div>
 

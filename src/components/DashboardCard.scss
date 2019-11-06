@@ -2,8 +2,10 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   width: 30%;
+  margin-left: 2.5%;
   background: #f5f5f5;
   margin-bottom: 3%;
+  cursor: pointer;
 }
 
 .dashboard-card-headline {
@@ -18,4 +20,10 @@
   font-weight: bold;
   padding-top: 20px;
   padding-bottom: 40px;
+}
+
+.add-sign {
+  font-size: 100px;
+  margin-top: 15px;
+  cursor: pointer;
 }

@@ -43,4 +43,6 @@ app.get('/auth/me', ac.me);
 app.get('/api/transactions', mc.getTransactions);
 app.get('/api/get_rules', mc.getRules);
 
+app.post('/api/update_rules', mc.updateRules);
+
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

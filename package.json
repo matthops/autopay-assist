@@ -12,6 +12,7 @@
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "massive": "^5.7.6",
+    "moment": "^2.24.0",
     "nexmo": "^2.5.1",
     "node-cron": "^2.0.3",
     "node-sass": "^4.13.0",

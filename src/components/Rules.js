@@ -10,16 +10,17 @@ export default class Rules extends Component {
   componentDidMount() {
     axios.get('/api/get_rules').then(results => {
       this.setState({
-        rulesArr: results.data
+        rulesArr: results.data[0].category.weekly
       });
     });
   }
 
   render() {
+    console.log('Rules Arr', this.state.rulesArr);
     const renderRules = this.state.rulesArr.map((e, i) => {
       return (
         <div className="rules-container__inner" key={i}>
-          Total spent on {e.category} {e.frequency}
+          Total spent on {e}
         </div>
       );
     });
