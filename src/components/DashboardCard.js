@@ -7,6 +7,10 @@ export default function DashboardCard(props) {
       className="dashboard-card-container"
       onClick={() => props.handleClick(props.name)}
     >
+      <button class="card-action" onClick={props.onDelete}>
+        {/* <span class="delete-icon">x</span> */}
+        <span class="delete-icon">x</span>
+      </button>
       {props.isAddCategory ? (
         <div className="add-sign" onClick={props.addCard}>
           +

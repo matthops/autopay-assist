@@ -32,5 +32,14 @@ module.exports = {
         res.status(201).send(response);
       });
     });
+  },
+  deleteFromRules: (req, res) => {
+    const db = req.app.get('db');
+    const user = req.session.user.id;
+    const userRules = req.body.userRules;
+
+    db.set_rules([user, { weekly: userRules }]).then(response => {
+      res.status(201).send(response);
+    });
   }
 };

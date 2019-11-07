@@ -5,7 +5,32 @@
   margin-left: 2.5%;
   background: #f5f5f5;
   margin-bottom: 3%;
+  z-index: 4;
+  position: relative;
   cursor: pointer;
+
+  .card-action {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(50%) translateY(-50%);
+    width: 30px;
+    height: 30px;
+    z-index: 10;
+    border-radius: 100%;
+    border: none;
+    background-color: #8a3324;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+    opacity: 0;
+    transition: 0.25s;
+    color: #ffffff;
+  }
+
+  &:hover {
+    .card-action {
+      opacity: 1;
+    }
+  }
 }
 
 .dashboard-card-headline {

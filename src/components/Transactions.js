@@ -60,6 +60,17 @@ export default class Transactions extends Component {
     });
   };
 
+  handleDeleteRule = ruleIndex => {
+    this.state.rulesArr.splice(ruleIndex, 1);
+    axios
+      .post('/api/delete_from_rules', { userRules: this.state.rulesArr })
+      .then(response => {
+        this.setState({
+          rulesArr: response.data[0].category.weekly
+        });
+      });
+  };
+
   render() {
     const { transactionsArr, rulesArr, filterWord } = this.state;
     console.log('filterword', filterWord);
@@ -135,10 +146,11 @@ export default class Transactions extends Component {
       }
       return (
         <DashboardCard
+          onDelete={() => this.handleDeleteRule(index)}
           handleClick={this.handleFilterWordChange}
           name={x}
           key={index}
-          headline={`Total spent this week on ${x}`}
+          headline={`Total spent this month on ${x}`}
           cardNumber={`$${categoryArr(x).toLocaleString(undefined, {
             minimumFractionDigits: 2
           })}`}
@@ -152,7 +164,7 @@ export default class Transactions extends Component {
           <DashboardCard
             handleClick={this.handleFilterWordChange}
             name={null}
-            headline={'Amount spent this week'}
+            headline={'Amount spent this month'}
             cardNumber={`$${amountSpent.toLocaleString(undefined, {
               minimumFractionDigits: 2
             })}`}
